@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id        String   @id @default(cuid())
+  name      String   @default("Étudiant")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  answers   StudentAnswer[]
+  exams     ExamSession[]
+}
+
+model Exercise {
+  id          String   @id @default(cuid())
+  subject     String   // MATHEMATIQUES, PHYSIQUE, CHIMIE, OPTIQUE, CULTURE_GENERALE
+  topic       String   // e.g., "Algèbre", "Géométrie", "Mécanique"
+  difficulty  String   // FACILE, MOYEN, DIFFICILE
+  questionType String  // QCM, CALCUL
+  question    String
+  options     String?  // JSON array for MCQ options
+  correctAnswer String  // For MCQ: the correct option letter; For CALCUL: the correct answer
+  solution    String   // Step-by-step solution in French
+  points      Int      @default(4)
+  createdAt   DateTime @default(now())
+  answers     StudentAnswer[]
+}
+
+model StudentAnswer {
+  id         String   @id @default(cuid())
+  studentId  String
+  exerciseId String
+  studentAnswer String
+  isCorrect  Boolean
+  score      Float    @default(0)
+  createdAt  DateTime @default(now())
+  student    Student  @relation(fields: [studentId], references: [id])
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+}
+
+model ExamSession {
+  id          String   @id @default(cuid())
+  studentId   String
+  totalPoints Float    @default(0)
+ maxPoints   Int      @default(20)
+ duration    Int      @default(0) // seconds taken
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+  student     Student  @relation(fields: [studentId], references: [id])
+  answers     ExamAnswer[]
+}
+
+model ExamAnswer {
+  id           String      @id @default(cuid())
+  examSessionId String
+  exerciseId   String
+  studentAnswer String
+  isCorrect    Boolean
+  score        Float       @default(0)
+  examSession  ExamSession @relation(fields: [examSessionId], references: [id])
+}
