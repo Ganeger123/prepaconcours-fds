@@ -16,8 +16,10 @@ import {
   Menu,
   GraduationCap,
   X,
+  Info,
 } from 'lucide-react';
 import DashboardView from '@/components/views/DashboardView';
+import CursusView from '@/components/views/CursusView';
 import ExercisesView from '@/components/views/ExercisesView';
 import PracticeView from '@/components/views/PracticeView';
 import ExamView from '@/components/views/ExamView';
@@ -32,6 +34,7 @@ type ViewConfig = {
 
 const NAV_ITEMS: ViewConfig[] = [
   { id: 'dashboard', label: 'Tableau de bord', icon: <LayoutDashboard className="h-5 w-5" /> },
+  { id: 'cursus', label: 'Le programme FDS', icon: <Info className="h-5 w-5" /> },
   { id: 'exercises', label: 'Banque d\'exercices', icon: <BookOpen className="h-5 w-5" /> },
   { id: 'exam', label: 'Examen simulé', icon: <Clock className="h-5 w-5" /> },
   { id: 'results', label: 'Mes résultats', icon: <History className="h-5 w-5" /> },
@@ -42,7 +45,7 @@ function SidebarContent({ onNavigate }: { onNavigate: (view: string) => void }) 
   const { currentView, navigateTo } = useAppStore();
 
   const handleNav = (viewId: string) => {
-    navigateTo(viewId as 'dashboard' | 'exercises' | 'practice' | 'exam' | 'results' | 'ai-assistant');
+    navigateTo(viewId as 'dashboard' | 'cursus' | 'exercises' | 'practice' | 'exam' | 'results' | 'ai-assistant');
     onNavigate(viewId);
   };
 
@@ -102,6 +105,8 @@ export default function Home() {
     switch (currentView) {
       case 'dashboard':
         return <DashboardView />;
+      case 'cursus':
+        return <CursusView />;
       case 'exercises':
         return <ExercisesView />;
       case 'practice':

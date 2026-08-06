@@ -13,6 +13,7 @@ export type QuestionType = 'QCM' | 'CALCUL';
 
 export type ViewName =
   | 'dashboard'
+  | 'cursus'
   | 'exercises'
   | 'practice'
   | 'exam'
@@ -91,7 +92,7 @@ export const SUBJECT_INFO: Record<
     label: 'Mathématiques',
     icon: 'Calculator',
     color: 'text-emerald-600 bg-emerald-50 border-emerald-200',
-    topics: ['Algèbre', 'Géométrie', 'Trigonométrie', 'Analyse', 'Probabilités'],
+    topics: ['Algèbre', 'Géométrie', 'Géométrie analytique', 'Trigonométrie', 'Analyse', 'Limites', 'Probabilités', 'Suites numériques', 'Nombres complexes'],
   },
   PHYSIQUE: {
     label: 'Physique',
