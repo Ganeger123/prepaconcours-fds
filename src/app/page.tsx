@@ -58,7 +58,7 @@ function SidebarContent({ onNavigate }: { onNavigate: (view: string) => void }) 
         </div>
         <div>
           <h1 className="font-bold text-base leading-tight">PrépaConcours</h1>
-          <p className="text-xs text-muted-foreground">Faculté des Sciences d\'Haïti</p>
+          <p className="text-xs text-muted-foreground">Faculté des Sciences d&apos;Haïti</p>
         </div>
       </div>
 
@@ -186,7 +186,7 @@ export default function Home() {
       <footer className="lg:pl-64 mt-auto">
         <div className="border-t border-border bg-white px-4 py-3 md:px-6 lg:px-8">
           <p className="text-center text-xs text-muted-foreground">
-            PrépaConcours FDS — Plateforme de préparation au concours d\'entrée de la Faculté des Sciences d\'Haïti
+            PrépaConcours FDS — Plateforme de préparation au concours d&apos;entrée de la Faculté des Sciences d&apos;Haïti
           </p>
         </div>
       </footer>

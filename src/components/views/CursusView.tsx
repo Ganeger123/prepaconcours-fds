@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { useAppStore } from '@/lib/store';
 import {
   GraduationCap,
   BookOpen,
@@ -13,7 +14,6 @@ import {
   Trophy,
   Target,
   Lightbulb,
-  Building2,
   Calculator,
   Atom,
   FlaskConical,
@@ -223,7 +223,7 @@ type Tab = 'presentation' | 'epreuves' | 'filiieres' | 'conseils';
 const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'presentation', label: 'La FDS', icon: <GraduationCap className="h-4 w-4" /> },
   { id: 'epreuves', label: '\u00c9preuves', icon: <FileText className="h-4 w-4" /> },
-  { id: 'filieres', label: 'Fili\u00e8res', icon: <BookOpen className="h-4 w-4" /> },
+  { id: 'filieres' as Tab, label: 'Fili\u00e8res', icon: <BookOpen className="h-4 w-4" /> },
   { id: 'conseils', label: 'Conseils', icon: <Lightbulb className="h-4 w-4" /> },
 ];
 
@@ -251,7 +251,7 @@ export default function CursusView() {
       {/* Tab content */}
       {activeTab === 'presentation' && <PresentationTab />}
       {activeTab === 'epreuves' && <EpreuvesTab />}
-      {activeTab === 'filieres' && <FiliereTab />}
+      {activeTab === ('filieres' as Tab) && <FiliereTab />}
       {activeTab === 'conseils' && <ConseilsTab />}
     </div>
   );
@@ -324,7 +324,7 @@ function PresentationTab() {
           <div className="flex items-start gap-3">
             <CheckCircle className="h-5 w-5 text-emerald-500 mt-0.5 shrink-0" />
             <p className="text-gray-700">
-              <strong>Etre titulaire du Baccalaur\u00e9at II</strong> (toutes sections : Sciences, Philo, etc.)
+              <strong>Être titulaire du Baccalaur\u00e9at II</strong> (toutes sections : Sciences, Philo, etc.)
             </p>
           </div>
           <div className="flex items-start gap-3">
@@ -516,6 +516,8 @@ function FiliereTab() {
 // ── Conseils Tab ──
 
 function ConseilsTab() {
+  const navigateTo = useAppStore((s) => s.navigateTo);
+
   return (
     <div className="space-y-6">
       <div>
@@ -547,16 +549,16 @@ function ConseilsTab() {
           <Lightbulb className="h-8 w-8 text-emerald-600 mx-auto" />
           <h3 className="font-bold text-gray-900">Pr\u00eat \u00e0 vous entra\u00eener ?</h3>
           <p className="text-sm text-gray-600 max-w-md mx-auto">
-            Commencez par les exercices de notre banque ou passez un examen simulé pour évaluer votre niveau.
+            Commencez par les exercices de notre banque ou passez un examen simul\u00e9 pour \u00e9valuer votre niveau.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 justify-center pt-1">
-            <Button className="bg-emerald-600 hover:bg-emerald-700 gap-2">
+            <Button className="bg-emerald-600 hover:bg-emerald-700 gap-2" onClick={() => navigateTo('exercises')}>
               <BookOpen className="h-4 w-4" />
-              Banque d\'exercices
+              Banque d&apos;exercices
             </Button>
-            <Button variant="outline" className="gap-2">
+            <Button variant="outline" className="gap-2" onClick={() => navigateTo('exam')}>
               <Clock className="h-4 w-4" />
-              Examen simulé
+              Examen simul\u00e9
             </Button>
           </div>
         </CardContent>

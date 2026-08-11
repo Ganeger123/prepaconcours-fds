@@ -84,41 +84,6 @@ export default function ExamView() {
     navigateTo,
   } = useAppStore();
 
-  // ── Timer ──────────────────────────────────────────────────
-
-  useEffect(() => {
-    if (!examActive || examSubmitted) {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-      return;
-    }
-
-    intervalRef.current = setInterval(() => {
-      setExamTimeLeft((prev: number) => {
-        if (prev <= 1) {
-          // Time's up — auto-submit
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-          }
-          // Use setTimeout to avoid calling setState during render
-          setTimeout(() => submitExam(), 0);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    };
-  }, [examActive, examSubmitted]);
-
   // ── Start Exam ─────────────────────────────────────────────
 
   const startExam = useCallback(async () => {
@@ -200,6 +165,41 @@ export default function ExamView() {
     }
   }, [examSubmitted, examExercises, examAnswers, examTimeLeft, setExamScore, setExamSubmitted, setExamActive]);
 
+  // ── Timer (uses ref to submitExam to avoid stale closure) ──
+
+  const submitExamRef = useRef(submitExam);
+  submitExamRef.current = submitExam;
+
+  useEffect(() => {
+    if (!examActive || examSubmitted) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      return;
+    }
+
+    intervalRef.current = setInterval(() => {
+      const current = useAppStore.getState().examTimeLeft;
+      if (current <= 1) {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+        setTimeout(() => submitExamRef.current(), 0);
+        return;
+      }
+      setExamTimeLeft(current - 1);
+    }, 1000);
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [examActive, examSubmitted, setExamTimeLeft]);
+
   // ── Handle Submit with Confirmation ────────────────────────
 
   const handleSubmitClick = useCallback(() => {
@@ -259,9 +259,9 @@ export default function ExamView() {
             <div className="mx-auto w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
               <Clock className="w-8 h-8 text-blue-600" />
             </div>
-            <CardTitle className="text-2xl font-bold">Simulateur d'Examen</CardTitle>
+            <CardTitle className="text-2xl font-bold">Simulateur d&apos;Examen</CardTitle>
             <CardDescription className="text-base">
-              Préparez-vous aux conditions réelles de l'examen d'admission.
+              Préparez-vous aux conditions réelles de l&apos;examen d&apos;admission.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -287,7 +287,7 @@ export default function ExamView() {
             <Alert>
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
-                L'examen comprend 20 questions (4 par matière : Mathématiques, Physique, Chimie, Optique, Culture Générale).
+                L&apos;examen comprend 20 questions (4 par matière : Mathématiques, Physique, Chimie, Optique, Culture Générale).
                 Une fois commencé, le chronomètre ne peut pas être arrêté. Soyez prêt(e) !
               </AlertDescription>
             </Alert>
@@ -304,7 +304,7 @@ export default function ExamView() {
               className="w-full"
               size="lg"
             >
-              {loading ? 'Chargement des questions...' : 'Commencer l\'examen'}
+              {loading ? 'Chargement des questions...' : 'Commencer l&apos;examen'}
             </Button>
           </CardContent>
         </Card>
@@ -624,7 +624,7 @@ export default function ExamView() {
                       disabled={loading}
                     >
                       <Send className="w-4 h-4 mr-1" />
-                      Soumettre l'examen
+                      Soumettre l&apos;examen
                     </Button>
                   )}
                 </div>

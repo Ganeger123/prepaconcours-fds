@@ -1,5 +1,6 @@
 import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
+import { Prisma } from '@prisma/client';
 
 export async function GET(request: Request) {
   try {
@@ -10,6 +11,7 @@ export async function GET(request: Request) {
     const questionType = searchParams.get('questionType');
     const ids = searchParams.get('ids');
     const exam = searchParams.get('exam');
+    const search = searchParams.get('search');
 
     // Fetch specific exercises by IDs
     if (ids) {
@@ -41,14 +43,17 @@ export async function GET(request: Request) {
     }
 
     // Standard filtering
-    const where: Record<string, unknown> = {};
+    const where: Prisma.ExerciseWhereInput = {};
     if (subject) where.subject = subject;
     if (difficulty) where.difficulty = difficulty;
     if (topic) where.topic = topic;
     if (questionType) where.questionType = questionType;
+    if (search) {
+      where.question = { contains: search };
+    }
 
     const exercises = await db.exercise.findMany({
-      where: Object.keys(where).length > 0 ? where : undefined,
+      where: where,
       orderBy: { createdAt: 'asc' },
     });
 
