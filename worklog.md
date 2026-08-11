@@ -1,38 +1,23 @@
-# Work Log
+# Worklog
 
 ---
 Task ID: 1
-Agent: Main
-Task: Build PrépaConcours FDS - Haitian exam prep web app
+Agent: Main Agent
+Task: Full audit and review of PrépaConcours FDS website
 
 Work Log:
-- Designed and pushed Prisma schema with 5 models (Student, Exercise, StudentAnswer, ExamSession, ExamAnswer)
-- Created 45 French exercises across 5 subjects with step-by-step solutions
-- Built 6 API routes: exercises, grade, results, stats, exam, AI
-- Created Zustand store for SPA navigation and app state management
-- Built 6 view components: DashboardView, ExercisesView, PracticeView, ExamView, ResultsView, AIAssistantView
-- Built main page.tsx with responsive sidebar navigation and view routing
-- Browser-verified: dashboard, exercise bank, practice grading, exam simulator, AI assistant, results
-
----
-Task ID: 11
-Agent: Main
-Task: Fetch real FDS curriculum data and add Cursus view
-
-Work Log:
-- Searched fds.edu.ht, admission.ueh.edu.ht, editions-jpl.com for real FDS exam data
-- Found official exam structure: Math (3h), Physique-Chimie (2h), Analyse de texte/Logique (2h)
-- Found program details: 5 filières (Génie Civil, Électronique, Électromécanique, Topographie, Licence Chimie) + 2 Masters
-- Found admission conditions: BACC II required, top 100 candidates admitted
-- Built CursusView with 4 tabs: La FDS (history/presentation), Épreuves (detailed exam subjects), Filières (programs & careers), Conseils (study tips)
-- All data sourced from official websites with citations
-- Added 10 new FDS-exam-style exercises: Géométrie analytique (3), Suites numériques (2), Limites (3), Nombres complexes (2)
-- Updated SUBJECT_INFO to include 4 new topics
-- Re-seeded database with 55 total exercises
-- Browser-verified: all 4 Cursus tabs render correctly, new exercise topics appear in filter
-- Lint clean, no runtime errors
+- Read all source files: page.tsx, layout.tsx, store.ts, types.ts
+- Audited all 7 view components: DashboardView, ExercisesView, PracticeView, ExamView, ResultsView, AIAssistantView, CursusView
+- Audited all 6 API routes: exercises, grade, results, stats, exam, ai
+- Audited prisma schema and seed data (55 exercises)
+- Identified and fixed all issues
 
 Stage Summary:
-- Cursus view provides comprehensive real information about the FDS
-- 55 exercises total, with topics matching actual FDS exam content
-- Sources cited: fds.edu.ht, admission.ueh.edu.ht, editions-jpl.com
+- **CursusView.tsx**: Completely rewritten - all French text was stored as Unicode escapes (\u00e9, \u00e8, etc.) instead of readable UTF-8 characters. Fixed all ~100+ escape sequences, removed unused imports (FlaskConical, Eye, Globe), fixed unnecessary `as Tab` type casts, fixed inconsistent indentation in FiliereTab Master Card
+- **ExercisesView.tsx**: Fixed plural logic - '0 exercice trouvé' and '1 exercice trouvé' both showed singular form; simplified to `<= 1` check
+- **ExamView.tsx**: Fixed 'Non répondue' (singular) → 'Non répondues' (plural) in the question navigation legend to match context of multiple questions
+- **exam/route.ts**: Fixed misleading variable name `exercise` → `examAns` in results mapping (was shadowing outer scope conceptually), improved comment
+- **seed.ts**: Replaced all 21 remaining Unicode escape sequences with proper UTF-8 characters for consistent codebase readability. Fixed a multiline string literal that broke compilation after the Unicode replacement
+- **Unused imports**: Removed FlaskConical, Eye, Globe from CursusView imports
+- Build verification: `next build` passes clean with no errors or warnings
+- Database re-seeded successfully with all 55 exercises

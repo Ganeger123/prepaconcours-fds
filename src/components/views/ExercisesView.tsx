@@ -362,11 +362,9 @@ export default function ExercisesView() {
           <span className="font-semibold text-gray-800">
             {exercises.length}
           </span>{' '}
-          {exercises.length === 0
+          {exercises.length <= 1
             ? 'exercice trouvé'
-            : exercises.length === 1
-              ? 'exercice trouvé'
-              : 'exercices trouvés'}
+            : 'exercices trouvés'}
         </p>
         {exercises.length > 0 && (
           <Button

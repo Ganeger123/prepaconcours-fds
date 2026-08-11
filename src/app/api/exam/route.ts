@@ -81,12 +81,12 @@ export async function POST(request: Request) {
     });
 
     const results = answers.map((a: { exerciseId: string; studentAnswer: string }) => {
-      const exercise = examAnswers.find((ea) => ea.exerciseId === a.exerciseId);
+      const examAns = examAnswers.find((ea) => ea.exerciseId === a.exerciseId);
       return {
         exerciseId: a.exerciseId,
-        isCorrect: exercise?.isCorrect ?? false,
-        score: exercise?.score ?? 0,
-        correctAnswer: '', // will be filled from client
+        isCorrect: examAns?.isCorrect ?? false,
+        score: examAns?.score ?? 0,
+        correctAnswer: '', // filled from client-side exercise details
       };
     });
 

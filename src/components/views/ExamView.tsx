@@ -528,7 +528,7 @@ export default function ExamView() {
                 <span className="w-3 h-3 rounded bg-blue-500" /> Répondue
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded bg-muted" /> Non répondue
+                <span className="w-3 h-3 rounded bg-muted" /> Non répondues
               </div>
             </div>
           </Card>
