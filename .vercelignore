@@ -1,0 +1,12 @@
+db/
+tool-results/
+download/
+scripts/
+examples/
+tests/
+*.log
+Caddyfile
+README.md
+worklog.md
+.git
+.hg

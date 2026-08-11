@@ -174,6 +174,28 @@ export default function DashboardView() {
   } = useAppStore();
 
   const [loading, setLoading] = useState(true);
+  const [setupStatus, setSetupStatus] = useState('');
+
+  // Auto-setup: seed database on first visit (needed for Vercel deployment)
+  useEffect(() => {
+    async function ensureSetup() {
+      try {
+        const check = await fetch('/api/setup');
+        const data = await check.json();
+        if (!data.isSeeded) {
+          setSetupStatus('Initialisation de la base de donnees...');
+          const setupRes = await fetch('/api/setup', { method: 'POST' });
+          if (setupRes.ok) {
+            const setupData = await setupRes.json();
+            setSetupStatus(setupData.message || 'Base de donnees prete !');
+          }
+        }
+      } catch {
+        // silently continue
+      }
+    }
+    ensureSetup();
+  }, []);
 
   useEffect(() => {
     async function fetchStats() {
@@ -197,7 +219,7 @@ export default function DashboardView() {
     return <DashboardSkeleton />;
   }
 
-  if (totalExercisesCompleted === 0) {
+  if (totalExercisesCompleted === 0 && !setupStatus) {
     return <EmptyState />;
   }
 
