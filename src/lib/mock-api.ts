@@ -258,11 +258,12 @@ async function handleExam(body: { answers: { exerciseId: string; studentAnswer: 
   // Build results
   const results = answers.map((a) => {
     const examAns = examAnswers.find((ea) => ea.exerciseId === a.exerciseId);
+    const exercise = exercises.find((e) => e.id === a.exerciseId);
     return {
       exerciseId: a.exerciseId,
       isCorrect: examAns?.isCorrect ?? false,
       score: examAns?.score ?? 0,
-      correctAnswer: '',
+      correctAnswer: exercise?.correctAnswer ?? '',
     };
   });
 
@@ -284,6 +285,7 @@ function handleResults(): Response {
     const exercise = exercises.find((e) => e.id === a.exerciseId);
     return {
       ...a,
+      studentId: 'local-student',
       exercise: exercise || null,
     };
   });

@@ -1,4 +1,14 @@
 import { NextResponse } from 'next/server';
+import ZAI from 'z-ai-web-dev-sdk';
+
+let zaiInstance: Awaited<ReturnType<typeof ZAI.create>> | null = null;
+
+async function getZAI() {
+  if (!zaiInstance) {
+    zaiInstance = await ZAI.create();
+  }
+  return zaiInstance;
+}
 
 export async function POST(request: Request) {
   try {
@@ -8,9 +18,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Message manquant' }, { status: 400 });
     }
 
-    // Use z-ai-web-dev-sdk for AI responses (server-side only)
-    const { createLLM } = await import('z-ai-web-dev-sdk');
-    const llm = createLLM();
+    const zai = await getZAI();
 
     const systemPrompt = `Tu es un assistant pédagogique haïtien spécialisé dans la préparation au concours d'entrée de la Faculté des Sciences d'Haïti.
 
@@ -31,11 +39,12 @@ Règles :
 7. Sois encourageant et motivant
 ${context ? `\nContexte actuel : ${context}` : ''}`;
 
-    const completion = await llm.chat({
+    const completion = await zai.chat.completions.create({
       messages: [
-        { role: 'system', content: systemPrompt },
+        { role: 'assistant', content: systemPrompt },
         { role: 'user', content: message },
       ],
+      thinking: { type: 'disabled' },
     });
 
     const reply = completion.choices?.[0]?.message?.content || 'Désolé, je n\'ai pas pu générer une réponse. Veuillez réessayer.';
@@ -44,7 +53,7 @@ ${context ? `\nContexte actuel : ${context}` : ''}`;
   } catch (error) {
     console.error('Error with AI:', error);
     return NextResponse.json(
-      { reply: 'Désolé, une erreur est survenue. Veuillez réessayer.' },
+      { reply: 'Désolé, une erreur est survenue lors de la communication avec l\'assistant. Veuillez réessayer.' },
       { status: 200 }
     );
   }
