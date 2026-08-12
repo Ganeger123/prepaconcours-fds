@@ -107,7 +107,7 @@ function HistoryCard({ record }: { record: StudentAnswerRecord }) {
             ) : (
               <XCircle className="w-5 h-5 text-red-500" />
             )}
-            <ScoreBadge score={record.score} />
+            <ScoreBadge score={record.score} maxScore={record.exercise.points} />
           </div>
         </div>
 

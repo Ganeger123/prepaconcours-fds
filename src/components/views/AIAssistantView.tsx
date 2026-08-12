@@ -76,14 +76,12 @@ export default function AIAssistantView() {
   } = useAppStore();
 
   const [input, setInput] = useState('');
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // ── Auto-scroll on new messages ───────────────────────────────
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [aiMessages, aiLoading]);
 
   // ── Auto-resize textarea ─────────────────────────────────────
@@ -191,7 +189,7 @@ export default function AIAssistantView() {
 
       {/* Chat area */}
       <Card className="flex-1 flex flex-col mx-4 mb-2 overflow-hidden">
-        <ScrollArea className="flex-1" ref={scrollRef}>
+        <ScrollArea className="flex-1">
           <CardContent className="p-4 space-y-4">
             {aiMessages.length === 0 && !aiLoading ? (
               <EmptyChatState onSuggestionClick={handleSend} />
@@ -260,6 +258,8 @@ export default function AIAssistantView() {
               </>
             )}
           </CardContent>
+          {/* Scroll anchor */}
+          <div ref={bottomRef} />
         </ScrollArea>
 
         {/* Quick suggestions (shown when chat has messages) */}

@@ -643,6 +643,7 @@ export default function ExamView() {
       {error && (
         <div className="p-4 max-w-5xl mx-auto">
           <Alert variant="destructive">
+            <AlertTriangle className="h-4 w-4" />
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         </div>

@@ -348,7 +348,7 @@ function PresentationTab() {
       {/* Location */}
       <Card className="bg-gray-50">
         <CardContent className="p-6 flex items-start gap-4">
-          <MapPin className="h-6 h-6 text-red-500 mt-0.5" />
+          <MapPin className="h-6 w-6 text-red-500 mt-0.5" />
           <div>
             <h3 className="font-semibold text-gray-900">Campus de la FDS</h3>
             <p className="text-gray-600 text-sm mt-1">

@@ -20,34 +20,10 @@ export const subjects = [
 ] as const;
 
 export const exercises: Exercise[] = [
-  // ===================== MATHEMATIQUES =====================
+  // ===================== MATHEMATIQUES (9) =====================
   // --- Algèbre ---
   {
     id: 'ex_1',
-    subject: 'MATHEMATIQUES',
-    topic: 'Algèbre',
-    difficulty: 'FACILE',
-    questionType: 'QCM',
-    question: "Résolvez l'équation : 2x + 6 = 14",
-    options: JSON.stringify(['x = 2', 'x = 4', 'x = 6', 'x = 10']),
-    correctAnswer: 'x = 4',
-    solution: '2x + 6 = 14\n2x = 14 - 6\n2x = 8\nx = 8 / 2\nx = 4\n\nVérification : 2(4) + 6 = 8 + 6 = 14 ✓',
-    points: 4,
-  },
-  {
-    id: 'ex_2',
-    subject: 'MATHEMATIQUES',
-    topic: 'Algèbre',
-    difficulty: 'FACILE',
-    questionType: 'QCM',
-    question: 'Quel est le résultat de (3x + 2)(x - 1) ?',
-    options: JSON.stringify(['3x² - x - 2', '3x² + x - 2', '3x² - 3x - 2', '3x² - x + 2']),
-    correctAnswer: '3x² - x - 2',
-    solution: '(3x + 2)(x - 1)\n= 3x × x + 3x × (-1) + 2 × x + 2 × (-1)\n= 3x² - 3x + 2x - 2\n= 3x² - x - 2',
-    points: 4,
-  },
-  {
-    id: 'ex_3',
     subject: 'MATHEMATIQUES',
     topic: 'Algèbre',
     difficulty: 'MOYEN',
@@ -58,21 +34,9 @@ export const exercises: Exercise[] = [
     solution: 'x² - 4x + 3 = 0\nOn utilise le discriminant : Δ = b² - 4ac = (-4)² - 4(1)(3) = 16 - 12 = 4\nΔ > 0, donc deux racines :\nx₁ = (4 - √4) / 2 = (4 - 2) / 2 = 1\nx₂ = (4 + √4) / 2 = (4 + 2) / 2 = 3\n\nLes racines sont x = 1 et x = 3.',
     points: 4,
   },
-  {
-    id: 'ex_4',
-    subject: 'MATHEMATIQUES',
-    topic: 'Algèbre',
-    difficulty: 'DIFFICILE',
-    questionType: 'CALCUL',
-    question: 'Résolvez le système :\n2x + y = 7\nx - y = 2\nDonnez la valeur de x et y séparées par une virgule (ex: 3, 1)',
-    options: null,
-    correctAnswer: '3, 1',
-    solution: "Système :\n2x + y = 7 ...(1)\nx - y = 2 ...(2)\n\nMéthode d'addition : (1) + (2) :\n2x + y + x - y = 7 + 2\n3x = 9\nx = 3\n\nDans (2) : 3 - y = 2 → y = 1\n\nVérification : 2(3) + 1 = 7 ✓ et 3 - 1 = 2 ✓",
-    points: 4,
-  },
   // --- Géométrie ---
   {
-    id: 'ex_5',
+    id: 'ex_2',
     subject: 'MATHEMATIQUES',
     topic: 'Géométrie',
     difficulty: 'FACILE',
@@ -83,108 +47,9 @@ export const exercises: Exercise[] = [
     solution: "Aire du triangle = (base × hauteur) / 2\n= (10 × 6) / 2\n= 60 / 2\n= 30 cm²",
     points: 4,
   },
-  {
-    id: 'ex_6',
-    subject: 'MATHEMATIQUES',
-    topic: 'Géométrie',
-    difficulty: 'MOYEN',
-    questionType: 'QCM',
-    question: "Dans un cercle de rayon 5 cm, quelle est la longueur d'un arc de 60° ?",
-    options: JSON.stringify(['(5π/3) cm', '(10π/3) cm', '(25π/6) cm', '5π cm']),
-    correctAnswer: '(5π/3) cm',
-    solution: "Longueur de l'arc = (θ/360) × 2πr\n= (60/360) × 2π × 5\n= (1/6) × 10π\n= 10π/6\n= 5π/3 cm",
-    points: 4,
-  },
-  {
-    id: 'ex_7',
-    subject: 'MATHEMATIQUES',
-    topic: 'Géométrie',
-    difficulty: 'DIFFICILE',
-    questionType: 'CALCUL',
-    question: 'Un cylindre a un volume de 200π cm³ et un rayon de 5 cm. Calculez sa hauteur en cm.',
-    options: null,
-    correctAnswer: '8',
-    solution: 'Volume du cylindre = πr²h\n200π = π × 5² × h\n200π = 25π × h\nh = 200π / (25π)\nh = 200 / 25\nh = 8 cm',
-    points: 4,
-  },
-  // --- Trigonométrie ---
-  {
-    id: 'ex_8',
-    subject: 'MATHEMATIQUES',
-    topic: 'Trigonométrie',
-    difficulty: 'FACILE',
-    questionType: 'QCM',
-    question: "Dans un triangle rectangle, si l'angle θ = 30° et l'hypoténuse = 10, que vaut le côté adjacent ?",
-    options: JSON.stringify(['5√3', '5', '10√3', '10']),
-    correctAnswer: '5√3',
-    solution: "cos(30°) = adjacent / hypoténuse\ncos(30°) = √3/2\n\nadjacent = hypoténuse × cos(30°)\n= 10 × (√3/2)\n= 5√3",
-    points: 4,
-  },
-  {
-    id: 'ex_9',
-    subject: 'MATHEMATIQUES',
-    topic: 'Trigonométrie',
-    difficulty: 'MOYEN',
-    questionType: 'QCM',
-    question: 'Quelle est la valeur de sin²(α) + cos²(α) ?',
-    options: JSON.stringify(['1', '0', '2', 'tan(α)']),
-    correctAnswer: '1',
-    solution: 'sin²(α) + cos²(α) = 1 est une identité trigonométrique fondamentale.',
-    points: 4,
-  },
-  {
-    id: 'ex_10',
-    subject: 'MATHEMATIQUES',
-    topic: 'Trigonométrie',
-    difficulty: 'DIFFICILE',
-    questionType: 'CALCUL',
-    question: "Simplifiez l'expression : (sin(2x)) / (2sin(x)cos(x)). Donnez votre réponse sous forme de nombre.",
-    options: null,
-    correctAnswer: '1',
-    solution: 'On sait que sin(2x) = 2sin(x)cos(x) (formule du double angle).\n\nDonc : sin(2x) / (2sin(x)cos(x))\n= 2sin(x)cos(x) / (2sin(x)cos(x))\n= 1',
-    points: 4,
-  },
-  // --- Analyse ---
-  {
-    id: 'ex_11',
-    subject: 'MATHEMATIQUES',
-    topic: 'Analyse',
-    difficulty: 'MOYEN',
-    questionType: 'QCM',
-    question: 'Quelle est la dérivée de f(x) = 3x⁴ - 2x² + 5x - 1 ?',
-    options: JSON.stringify(['12x³ - 4x + 5', '12x³ - 2x + 5', '3x³ - 4x + 5', '12x⁴ - 4x + 5']),
-    correctAnswer: '12x³ - 4x + 5',
-    solution: "f(x) = 3x⁴ - 2x² + 5x - 1\nf'(x) = 4 × 3x³ - 2 × 2x + 5 - 0\n= 12x³ - 4x + 5",
-    points: 4,
-  },
-  {
-    id: 'ex_12',
-    subject: 'MATHEMATIQUES',
-    topic: 'Analyse',
-    difficulty: 'DIFFICILE',
-    questionType: 'CALCUL',
-    question: 'Calculez l\'intégrale définie de f(x) = 2x + 1 de x=0 à x=3.',
-    options: null,
-    correctAnswer: '12',
-    solution: '∫₀³ (2x + 1) dx = [x² + x]₀³\n= (3² + 3) - (0² + 0)\n= (9 + 3) - 0\n= 12',
-    points: 4,
-  },
-  // --- Probabilités ---
-  {
-    id: 'ex_13',
-    subject: 'MATHEMATIQUES',
-    topic: 'Probabilités',
-    difficulty: 'FACILE',
-    questionType: 'QCM',
-    question: "On lance un dé à 6 faces. Quelle est la probabilité d'obtenir un nombre pair ?",
-    options: JSON.stringify(['1/2', '1/3', '1/6', '2/3']),
-    correctAnswer: '1/2',
-    solution: 'Nombres pairs sur un dé : {2, 4, 6} → 3 résultats favorables\nNombre total de résultats possibles : 6\n\nP(pair) = 3/6 = 1/2',
-    points: 4,
-  },
   // --- Géométrie analytique ---
   {
-    id: 'ex_14',
+    id: 'ex_3',
     subject: 'MATHEMATIQUES',
     topic: 'Géométrie analytique',
     difficulty: 'MOYEN',
@@ -195,70 +60,35 @@ export const exercises: Exercise[] = [
     solution: 'Pente : m = (0 - 3) / (-1 - 2) = -3 / -3 = 1\nÉquation : y - y_A = m(x - x_A)\ny - 3 = 1(x - 2)\ny = x + 1',
     points: 4,
   },
+  // --- Trigonométrie ---
   {
-    id: 'ex_15',
+    id: 'ex_4',
     subject: 'MATHEMATIQUES',
-    topic: 'Géométrie analytique',
-    difficulty: 'DIFFICILE',
-    questionType: 'CALCUL',
-    question: "Soit le cercle d'équation x² + y² - 4x + 6y - 3 = 0. Calculez son rayon.",
-    options: null,
-    correctAnswer: '4',
-    solution: "Forme canonique : (x - a)² + (y - b)² = R²\nx² - 4x + y² + 6y = 3\nx² - 4x + 4 + y² + 6y + 9 = 3 + 4 + 9\n(x - 2)² + (y + 3)² = 16\n\nR² = 16 donc R = 4",
-    points: 4,
-  },
-  {
-    id: 'ex_16',
-    subject: 'MATHEMATIQUES',
-    topic: 'Géométrie analytique',
-    difficulty: 'MOYEN',
-    questionType: 'QCM',
-    question: "La parabole d'équation y = x² - 4x + 3 a pour sommet :",
-    options: JSON.stringify(['S(2, -1)', 'S(2, 1)', 'S(-2, -1)', 'S(1, 0)']),
-    correctAnswer: 'S(2, -1)',
-    solution: "y = x² - 4x + 3\ny = (x - 2)² - 4 + 3\ny = (x - 2)² - 1\n\nSous forme (x - a)² + k, le sommet est S(a, k) = S(2, -1)",
-    points: 4,
-  },
-  // --- Suites numériques ---
-  {
-    id: 'ex_17',
-    subject: 'MATHEMATIQUES',
-    topic: 'Suites numériques',
-    difficulty: 'MOYEN',
-    questionType: 'QCM',
-    question: 'Soit la suite arithmétique (u_n) de premier terme u_0 = 3 et de raison r = 5. Quelle est la valeur de u_20 ?',
-    options: JSON.stringify(['103', '105', '100', '108']),
-    correctAnswer: '103',
-    solution: 'Formule : u_n = u_0 + n × r\nu_20 = 3 + 20 × 5\nu_20 = 3 + 100\nu_20 = 103',
-    points: 4,
-  },
-  {
-    id: 'ex_18',
-    subject: 'MATHEMATIQUES',
-    topic: 'Suites numériques',
-    difficulty: 'DIFFICILE',
-    questionType: 'CALCUL',
-    question: 'Soit la suite géométrique (v_n) de premier terme v_1 = 2 et de raison q = 3. Calculez la somme des 5 premiers termes S_5.',
-    options: null,
-    correctAnswer: '242',
-    solution: 'S_n = v_1 × (q^n - 1) / (q - 1)\nS_5 = 2 × (3^5 - 1) / (3 - 1)\nS_5 = 2 × (243 - 1) / 2\nS_5 = 2 × 242 / 2\nS_5 = 242',
-    points: 4,
-  },
-  // --- Limites et fonctions ---
-  {
-    id: 'ex_19',
-    subject: 'MATHEMATIQUES',
-    topic: 'Limites',
+    topic: 'Trigonométrie',
     difficulty: 'FACILE',
     questionType: 'QCM',
-    question: 'Quelle est la limite de f(x) = (2x + 1) / (x - 3) lorsque x tend vers +∞ ?',
-    options: JSON.stringify(['2', '0', '+∞', '-∞']),
-    correctAnswer: '2',
-    solution: "Pour x → +∞, on divise le numérateur et le dénominateur par x :\nf(x) = (2 + 1/x) / (1 - 3/x)\nQuand x → +∞ : 1/x → 0 et 3/x → 0\nf(x) → (2 + 0) / (1 - 0) = 2",
+    question: "Dans un triangle rectangle, si l'angle θ = 30° et l'hypoténuse = 10, que vaut le côté adjacent ?",
+    options: JSON.stringify(['5√3', '5', '10√3', '10']),
+    correctAnswer: '5√3',
+    solution: "cos(30°) = adjacent / hypoténuse\ncos(30°) = √3/2\n\nadjacent = hypoténuse × cos(30°)\n= 10 × (√3/2)\n= 5√3",
     points: 4,
   },
+  // --- Analyse ---
   {
-    id: 'ex_20',
+    id: 'ex_5',
+    subject: 'MATHEMATIQUES',
+    topic: 'Analyse',
+    difficulty: 'MOYEN',
+    questionType: 'QCM',
+    question: 'Quelle est la dérivée de f(x) = 3x⁴ - 2x² + 5x - 1 ?',
+    options: JSON.stringify(['12x³ - 4x + 5', '12x³ - 2x + 5', '3x³ - 4x + 5', '12x⁴ - 4x + 5']),
+    correctAnswer: '12x³ - 4x + 5',
+    solution: "f(x) = 3x⁴ - 2x² + 5x - 1\nf'(x) = 4 × 3x³ - 2 × 2x + 5 - 0\n= 12x³ - 4x + 5",
+    points: 4,
+  },
+  // --- Limites ---
+  {
+    id: 'ex_6',
     subject: 'MATHEMATIQUES',
     topic: 'Limites',
     difficulty: 'DIFFICILE',
@@ -269,33 +99,35 @@ export const exercises: Exercise[] = [
     solution: 'On sait que lim(sin(x)/x) = 1 quand x → 0.\nlim(sin(3x)/x) = 3 × lim(sin(3x)/(3x)) = 3 × 1 = 3',
     points: 4,
   },
+  // --- Probabilités ---
   {
-    id: 'ex_21',
+    id: 'ex_7',
     subject: 'MATHEMATIQUES',
-    topic: 'Limites',
-    difficulty: 'MOYEN',
+    topic: 'Probabilités',
+    difficulty: 'FACILE',
     questionType: 'QCM',
-    question: 'Quelle est la dérivée de f(x) = sin(2x) ?',
-    options: JSON.stringify(['2cos(2x)', '-2cos(2x)', 'cos(2x)', '2sin(2x)cos(2x)']),
-    correctAnswer: '2cos(2x)',
-    solution: "f(x) = sin(2x)\nf'(x) = cos(2x) × 2\nf'(x) = 2cos(2x)",
+    question: "On lance un dé à 6 faces. Quelle est la probabilité d'obtenir un nombre pair ?",
+    options: JSON.stringify(['1/2', '1/3', '1/6', '2/3']),
+    correctAnswer: '1/2',
+    solution: 'Nombres pairs sur un dé : {2, 4, 6} → 3 résultats favorables\nNombre total de résultats possibles : 6\n\nP(pair) = 3/6 = 1/2',
+    points: 4,
+  },
+  // --- Suites numériques ---
+  {
+    id: 'ex_8',
+    subject: 'MATHEMATIQUES',
+    topic: 'Suites numériques',
+    difficulty: 'DIFFICILE',
+    questionType: 'CALCUL',
+    question: 'Soit la suite géométrique (v_n) de premier terme v_1 = 2 et de raison q = 3. Calculez la somme des 5 premiers termes S_5.',
+    options: null,
+    correctAnswer: '242',
+    solution: 'S_n = v_1 × (q^n - 1) / (q - 1)\nS_5 = 2 × (3^5 - 1) / (3 - 1)\nS_5 = 2 × (243 - 1) / 2\nS_5 = 2 × 242 / 2\nS_5 = 242',
     points: 4,
   },
   // --- Nombres complexes ---
   {
-    id: 'ex_22',
-    subject: 'MATHEMATIQUES',
-    topic: 'Nombres complexes',
-    difficulty: 'MOYEN',
-    questionType: 'QCM',
-    question: 'Quel est le module du nombre complexe z = 3 + 4i ?',
-    options: JSON.stringify(['5', '7', '25', '√7']),
-    correctAnswer: '5',
-    solution: '|z| = √(a² + b²)\n|z| = √(3² + 4²)\n|z| = √(9 + 16)\n|z| = √25 = 5',
-    points: 4,
-  },
-  {
-    id: 'ex_23',
+    id: 'ex_9',
     subject: 'MATHEMATIQUES',
     topic: 'Nombres complexes',
     difficulty: 'DIFFICILE',
@@ -307,10 +139,10 @@ export const exercises: Exercise[] = [
     points: 4,
   },
 
-  // ===================== PHYSIQUE =====================
+  // ===================== PHYSIQUE (9) =====================
   // --- Mécanique ---
   {
-    id: 'ex_24',
+    id: 'ex_10',
     subject: 'PHYSIQUE',
     topic: 'Mécanique',
     difficulty: 'FACILE',
@@ -322,7 +154,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_25',
+    id: 'ex_11',
     subject: 'PHYSIQUE',
     topic: 'Mécanique',
     difficulty: 'MOYEN',
@@ -334,7 +166,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_26',
+    id: 'ex_12',
     subject: 'PHYSIQUE',
     topic: 'Mécanique',
     difficulty: 'DIFFICILE',
@@ -347,7 +179,7 @@ export const exercises: Exercise[] = [
   },
   // --- Électricité ---
   {
-    id: 'ex_27',
+    id: 'ex_13',
     subject: 'PHYSIQUE',
     topic: 'Électricité',
     difficulty: 'FACILE',
@@ -359,7 +191,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_28',
+    id: 'ex_14',
     subject: 'PHYSIQUE',
     topic: 'Électricité',
     difficulty: 'MOYEN',
@@ -371,7 +203,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_29',
+    id: 'ex_15',
     subject: 'PHYSIQUE',
     topic: 'Électricité',
     difficulty: 'DIFFICILE',
@@ -384,7 +216,7 @@ export const exercises: Exercise[] = [
   },
   // --- Thermodynamique ---
   {
-    id: 'ex_30',
+    id: 'ex_16',
     subject: 'PHYSIQUE',
     topic: 'Thermodynamique',
     difficulty: 'FACILE',
@@ -396,7 +228,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_31',
+    id: 'ex_17',
     subject: 'PHYSIQUE',
     topic: 'Thermodynamique',
     difficulty: 'MOYEN',
@@ -407,11 +239,23 @@ export const exercises: Exercise[] = [
     solution: 'Loi de Charles (P constante) : V₁/T₁ = V₂/T₂\nV₂ = V₁ × T₂/T₁\nV₂ = 2 × 600/300\nV₂ = 2 × 2 = 4 L',
     points: 4,
   },
+  {
+    id: 'ex_18',
+    subject: 'PHYSIQUE',
+    topic: 'Thermodynamique',
+    difficulty: 'DIFFICILE',
+    questionType: 'CALCUL',
+    question: "Un moteur de Carnot fonctionne entre une source chaude à 500 K et une source froide à 300 K. Calculez son rendement en pourcentage (valeur numérique uniquement, sans le symbole %).",
+    options: null,
+    correctAnswer: '40',
+    solution: 'Rendement d\'un cycle de Carnot : η = 1 - T_froide / T_chaude\nη = 1 - 300/500\nη = 1 - 0,6\nη = 0,4 soit 40 %\n\nLe rendement maximal d\'un moteur thermique ne dépend que des températures des deux sources.',
+    points: 4,
+  },
 
-  // ===================== CHIMIE =====================
+  // ===================== CHIMIE (9) =====================
   // --- Atomistique ---
   {
-    id: 'ex_32',
+    id: 'ex_19',
     subject: 'CHIMIE',
     topic: 'Atomistique',
     difficulty: 'FACILE',
@@ -423,7 +267,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_33',
+    id: 'ex_20',
     subject: 'CHIMIE',
     topic: 'Atomistique',
     difficulty: 'MOYEN',
@@ -441,7 +285,7 @@ export const exercises: Exercise[] = [
   },
   // --- Chimie organique ---
   {
-    id: 'ex_34',
+    id: 'ex_21',
     subject: 'CHIMIE',
     topic: 'Chimie organique',
     difficulty: 'FACILE',
@@ -453,7 +297,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_35',
+    id: 'ex_22',
     subject: 'CHIMIE',
     topic: 'Chimie organique',
     difficulty: 'MOYEN',
@@ -466,7 +310,7 @@ export const exercises: Exercise[] = [
   },
   // --- Solutions ---
   {
-    id: 'ex_36',
+    id: 'ex_23',
     subject: 'CHIMIE',
     topic: 'Solutions',
     difficulty: 'FACILE',
@@ -478,7 +322,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_37',
+    id: 'ex_24',
     subject: 'CHIMIE',
     topic: 'Solutions',
     difficulty: 'DIFFICILE',
@@ -491,7 +335,7 @@ export const exercises: Exercise[] = [
   },
   // --- Réactions chimiques ---
   {
-    id: 'ex_38',
+    id: 'ex_25',
     subject: 'CHIMIE',
     topic: 'Réactions chimiques',
     difficulty: 'MOYEN',
@@ -508,7 +352,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_39',
+    id: 'ex_26',
     subject: 'CHIMIE',
     topic: 'Réactions chimiques',
     difficulty: 'DIFFICILE',
@@ -519,10 +363,23 @@ export const exercises: Exercise[] = [
     solution: 'M(N₂) = 2×14 = 28 g/mol\nn(N₂) = 14/28 = 0.5 mol\n1 mol N₂ → 2 mol NH₃\n0.5 mol N₂ → 1 mol NH₃\nM(NH₃) = 14 + 3×1 = 17 g/mol\nm(NH₃) = 1 × 17 = 17 g',
     points: 4,
   },
-
-  // ===================== OPTIQUE =====================
   {
-    id: 'ex_40',
+    id: 'ex_27',
+    subject: 'CHIMIE',
+    topic: 'Réactions chimiques',
+    difficulty: 'MOYEN',
+    questionType: 'QCM',
+    question: "Dans la réaction d'oxydoréduction : Cu²⁺ + Zn → Cu + Zn²⁺, quel est l'oxydant ?",
+    options: JSON.stringify(['Cu²⁺', 'Zn', 'Cu', 'Zn²⁺']),
+    correctAnswer: 'Cu²⁺',
+    solution: "L'oxydant est l'espèce qui se réduit (qui gagne des électrons).\n\nDemi-réaction de réduction : Cu²⁺ + 2e⁻ → Cu\nDemi-réaction d'oxydation : Zn → Zn²⁺ + 2e⁻\n\nCu²⁺ est l'oxydant (il se réduit), Zn est le réducteur (il s'oxyde).",
+    points: 4,
+  },
+
+  // ===================== OPTIQUE (9) =====================
+  // --- Réflexion ---
+  {
+    id: 'ex_28',
     subject: 'OPTIQUE',
     topic: 'Réflexion',
     difficulty: 'FACILE',
@@ -534,7 +391,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_41',
+    id: 'ex_29',
     subject: 'OPTIQUE',
     topic: 'Réflexion',
     difficulty: 'MOYEN',
@@ -546,7 +403,20 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_42',
+    id: 'ex_30',
+    subject: 'OPTIQUE',
+    topic: 'Réflexion',
+    difficulty: 'DIFFICILE',
+    questionType: 'CALCUL',
+    question: "Deux miroirs plans forment un angle de 60°. Un rayon lumineux subit deux réflexions successives sur ces miroirs. Quel est l'angle total de déviation du rayon en degrés ?",
+    options: null,
+    correctAnswer: '240',
+    solution: "Pour deux miroirs plans formant un angle α, la déviation totale après deux réflexions est indépendante de l'angle d'incidence :\n\nδ = 360° - 2α\nδ = 360° - 2 × 60°\nδ = 360° - 120°\nδ = 240°",
+    points: 4,
+  },
+  // --- Réfraction ---
+  {
+    id: 'ex_31',
     subject: 'OPTIQUE',
     topic: 'Réfraction',
     difficulty: 'FACILE',
@@ -563,7 +433,19 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_43',
+    id: 'ex_32',
+    subject: 'OPTIQUE',
+    topic: 'Réfraction',
+    difficulty: 'MOYEN',
+    questionType: 'CALCUL',
+    question: "Un rayon lumineux passe du verre (n=1.5) vers l'eau (n=1.33) avec un angle d'incidence de 30°. Calculez l'angle de réfraction en degrés (arrondi à l'entier le plus proche).",
+    options: null,
+    correctAnswer: '34',
+    solution: "Loi de Snell-Descartes : n₁ sin(i) = n₂ sin(r)\n1,5 × sin(30°) = 1,33 × sin(r)\n1,5 × 0,5 = 1,33 × sin(r)\n0,75 = 1,33 × sin(r)\nsin(r) = 0,75 / 1,33 ≈ 0,5639\nr = arcsin(0,5639) ≈ 34,3° ≈ 34°",
+    points: 4,
+  },
+  {
+    id: 'ex_33',
     subject: 'OPTIQUE',
     topic: 'Réfraction',
     difficulty: 'DIFFICILE',
@@ -574,20 +456,38 @@ export const exercises: Exercise[] = [
     solution: 'n₁ sin(θc) = n₂ sin(90°)\n1.5 × sin(θc) = 1\nsin(θc) = 1/1.5 = 0.667\nθc = arcsin(0.667) ≈ 41.8° ≈ 42°',
     points: 4,
   },
+  // --- Lentilles ---
   {
-    id: 'ex_44',
+    id: 'ex_34',
+    subject: 'OPTIQUE',
+    topic: 'Lentilles',
+    difficulty: 'FACILE',
+    questionType: 'QCM',
+    question: 'Une lentille convergente est caractérisée par :',
+    options: JSON.stringify([
+      'Une distance focale positive',
+      'Une distance focale négative',
+      'Un foyer virtuel',
+      'Une vergence négative',
+    ]),
+    correctAnswer: 'Une distance focale positive',
+    solution: "Une lentille convergente a une distance focale f > 0 et une vergence C = 1/f > 0.\nElle fait converger les rayons vers un foyer réel.\n\n- Lentille convergente : f > 0, C > 0\n- Lentille divergente : f < 0, C < 0",
+    points: 4,
+  },
+  {
+    id: 'ex_35',
     subject: 'OPTIQUE',
     topic: 'Lentilles',
     difficulty: 'MOYEN',
     questionType: 'QCM',
-    question: 'Une lentille convergente a une distance focale de 20 cm. Où se forme l\'image d\'un objet placé à 60 cm de la lentille ?',
+    question: "Une lentille convergente a une distance focale de 20 cm. Où se forme l'image d'un objet placé à 60 cm de la lentille ?",
     options: JSON.stringify(['30 cm de la lentille', '60 cm de la lentille', '20 cm de la lentille', '15 cm de la lentille']),
     correctAnswer: '30 cm de la lentille',
     solution: '1/f = 1/p + 1/q\n1/20 = 1/60 + 1/q\n1/q = 1/20 - 1/60 = 2/60 = 1/30\nq = 30 cm (image réelle).',
     points: 4,
   },
   {
-    id: 'ex_45',
+    id: 'ex_36',
     subject: 'OPTIQUE',
     topic: 'Lentilles',
     difficulty: 'DIFFICILE',
@@ -599,9 +499,10 @@ export const exercises: Exercise[] = [
     points: 4,
   },
 
-  // ===================== CULTURE GENERALE =====================
+  // ===================== CULTURE GENERALE (9) =====================
+  // --- Histoire d'Haïti ---
   {
-    id: 'ex_46',
+    id: 'ex_37',
     subject: 'CULTURE_GENERALE',
     topic: "Histoire d'Haïti",
     difficulty: 'FACILE',
@@ -613,19 +514,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_47',
-    subject: 'CULTURE_GENERALE',
-    topic: "Histoire d'Haïti",
-    difficulty: 'FACILE',
-    questionType: 'QCM',
-    question: 'Qui est considéré comme le père de la nation haïtienne ?',
-    options: JSON.stringify(['Jean-Jacques Dessalines', 'Toussaint Louverture', 'Henri Christophe', 'Alexandre Pétion']),
-    correctAnswer: 'Jean-Jacques Dessalines',
-    solution: "Jean-Jacques Dessalines est considéré comme le père de la nation haïtienne. Il a proclamé l'indépendance le 1er janvier 1804.",
-    points: 4,
-  },
-  {
-    id: 'ex_48',
+    id: 'ex_38',
     subject: 'CULTURE_GENERALE',
     topic: "Histoire d'Haïti",
     difficulty: 'MOYEN',
@@ -637,7 +526,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_49',
+    id: 'ex_39',
     subject: 'CULTURE_GENERALE',
     topic: "Histoire d'Haïti",
     difficulty: 'MOYEN',
@@ -649,7 +538,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_50',
+    id: 'ex_40',
     subject: 'CULTURE_GENERALE',
     topic: "Histoire d'Haïti",
     difficulty: 'DIFFICILE',
@@ -665,8 +554,9 @@ export const exercises: Exercise[] = [
     solution: "La cérémonie du Bois Caïman, en août 1791, est considérée comme l'événement déclencheur de la Révolution haïtienne.",
     points: 4,
   },
+  // --- Géographie ---
   {
-    id: 'ex_51',
+    id: 'ex_41',
     subject: 'CULTURE_GENERALE',
     topic: 'Géographie',
     difficulty: 'FACILE',
@@ -678,7 +568,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_52',
+    id: 'ex_42',
     subject: 'CULTURE_GENERALE',
     topic: 'Géographie',
     difficulty: 'MOYEN',
@@ -689,8 +579,9 @@ export const exercises: Exercise[] = [
     solution: "Le Pic la Selle, dans le massif de la Selle, est le point culminant d'Haïti avec 2 680 mètres.",
     points: 4,
   },
+  // --- Culture générale ---
   {
-    id: 'ex_53',
+    id: 'ex_43',
     subject: 'CULTURE_GENERALE',
     topic: 'Culture générale',
     difficulty: 'FACILE',
@@ -702,7 +593,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_54',
+    id: 'ex_44',
     subject: 'CULTURE_GENERALE',
     topic: 'Culture générale',
     difficulty: 'MOYEN',
@@ -714,7 +605,7 @@ export const exercises: Exercise[] = [
     points: 4,
   },
   {
-    id: 'ex_55',
+    id: 'ex_45',
     subject: 'CULTURE_GENERALE',
     topic: 'Culture générale',
     difficulty: 'DIFFICILE',

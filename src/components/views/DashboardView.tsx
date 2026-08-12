@@ -313,6 +313,7 @@ export default function DashboardView() {
       </div>
 
       {/* ── Charts row ───────────────────────────────────── */}
+      {totalCorrect + totalIncorrect > 0 && (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Bar chart – scores by subject */}
         <Card>
@@ -413,6 +414,7 @@ export default function DashboardView() {
           </CardContent>
         </Card>
       </div>
+      )}
 
       {/* ── Weak points section ──────────────────────────── */}
       {weakSubjects.length > 0 && (
