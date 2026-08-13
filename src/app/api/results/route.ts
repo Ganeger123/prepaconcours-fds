@@ -1,6 +1,22 @@
 import { NextResponse } from 'next/server';
+import { readStoredAnswers, getExerciseById } from '@/lib/cookie-helpers';
 
-// This route is handled client-side by mock-api.ts
-export async function GET() {
-  return NextResponse.json({ answers: [], totalCompleted: 0 });
+export async function GET(request: Request) {
+  const answers = readStoredAnswers(request);
+  const totalCompleted = answers.length;
+
+  // Enrich each answer with exercise details, newest first, max 100
+  const enriched = answers
+    .slice(-100)
+    .reverse()
+    .map((a) => {
+      const exercise = getExerciseById(a.exerciseId);
+      return {
+        ...a,
+        studentId: 'local-student',
+        exercise: exercise || null,
+      };
+    });
+
+  return NextResponse.json({ answers: enriched, totalCompleted });
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import '@/lib/mock-api';
+// API routes are now fully server-side (no more mock-api.ts override)
 import { useAppStore } from '@/lib/store';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';

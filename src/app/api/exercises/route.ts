@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
+import { filterExercises } from '@/lib/cookie-helpers';
 
-// This route is handled client-side by mock-api.ts
-// Server-side stub for Vercel compatibility (no database needed)
-export async function GET() {
-  return NextResponse.json([]);
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const filtered = filterExercises(searchParams);
+  return NextResponse.json(filtered);
 }
