@@ -1,5 +1,6 @@
 'use client';
 
+import '@/lib/mock-api'; // Must be first: overrides fetch for client-side API handling
 import { useState } from 'react';
 import { useAppStore } from '@/lib/store';
 import { Button } from '@/components/ui/button';
@@ -14,6 +15,7 @@ import {
   FileText,
   Clock,
   History,
+  Trophy,
   Bot,
   Menu,
   GraduationCap,
@@ -27,6 +29,7 @@ import ExercisesView from '@/components/views/ExercisesView';
 import PracticeView from '@/components/views/PracticeView';
 import ExamView from '@/components/views/ExamView';
 import ResultsView from '@/components/views/ResultsView';
+import LeaderboardView from '@/components/views/LeaderboardView';
 import AIAssistantView from '@/components/views/AIAssistantView';
 
 type ViewConfig = {
@@ -41,6 +44,7 @@ const NAV_ITEMS: ViewConfig[] = [
   { id: 'exercises', label: 'Banque d\'exercices', icon: <BookOpen className="h-5 w-5" /> },
   { id: 'exam', label: 'Examen simulé', icon: <Clock className="h-5 w-5" /> },
   { id: 'results', label: 'Mes résultats', icon: <History className="h-5 w-5" /> },
+  { id: 'leaderboard', label: 'Classement', icon: <Trophy className="h-5 w-5" /> },
   { id: 'ai-assistant', label: 'Assistant IA', icon: <Bot className="h-5 w-5" /> },
 ];
 
@@ -104,7 +108,7 @@ function SidebarContent({ onNavigate }: { onNavigate: (view: string) => void }) 
   const { currentView, navigateTo } = useAppStore();
 
   const handleNav = (viewId: string) => {
-    navigateTo(viewId as 'dashboard' | 'cursus' | 'exercises' | 'practice' | 'exam' | 'results' | 'ai-assistant');
+    navigateTo(viewId as 'dashboard' | 'cursus' | 'exercises' | 'practice' | 'exam' | 'results' | 'leaderboard' | 'ai-assistant');
     onNavigate(viewId);
   };
 
@@ -184,6 +188,8 @@ export default function Home() {
         return <ExamView />;
       case 'results':
         return <ResultsView />;
+      case 'leaderboard':
+        return <LeaderboardView />;
       case 'ai-assistant':
         return <AIAssistantView />;
       default:

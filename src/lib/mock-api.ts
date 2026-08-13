@@ -179,6 +179,36 @@ async function handleGrade(body: { exerciseId: string; studentAnswer: string }):
   });
   saveStoredAnswers(answers);
 
+  // Update leaderboard for current student
+  try {
+    const studentName = typeof localStorage !== 'undefined' ? localStorage.getItem('prepafds_student_name') || '' : '';
+    if (studentName) {
+      const lbRaw = localStorage.getItem('prepafds_leaderboard');
+      const lb = lbRaw ? JSON.parse(lbRaw) : [];
+      const existing = lb.find((e: { studentName: string }) => e.studentName === studentName);
+      const totalCorrect = answers.filter((a) => a.isCorrect).length;
+      const practiceRate = answers.length > 0 ? Math.round((totalCorrect / answers.length) * 100) : 0;
+      if (existing) {
+        existing.totalPracticeCorrect = totalCorrect;
+        existing.totalPracticeDone = answers.length;
+        existing.practiceRate = practiceRate;
+        existing.lastActivity = new Date().toISOString();
+      } else {
+        lb.push({
+          studentName,
+          bestExamScore: 0,
+          examCount: 0,
+          avgExamScore: 0,
+          totalPracticeCorrect: totalCorrect,
+          totalPracticeDone: answers.length,
+          practiceRate,
+          lastActivity: new Date().toISOString(),
+        });
+      }
+      localStorage.setItem('prepafds_leaderboard', JSON.stringify(lb));
+    }
+  } catch { /* silently ignore */ }
+
   return jsonResponse({
     isCorrect,
     score,
@@ -254,6 +284,42 @@ async function handleExam(body: { answers: { exerciseId: string; studentAnswer: 
   const allExamAnswers = getExamAnswers();
   allExamAnswers.push(...examAnswers);
   saveExamAnswers(allExamAnswers);
+
+  // Update leaderboard for current student
+  try {
+    const studentName = typeof localStorage !== 'undefined' ? localStorage.getItem('prepafds_student_name') || '' : '';
+    if (studentName) {
+      const lbRaw = localStorage.getItem('prepafds_leaderboard');
+      const lb = lbRaw ? JSON.parse(lbRaw) : [];
+      const existing = lb.find((e: { studentName: string }) => e.studentName === studentName);
+      const allAnswers = getStoredAnswers();
+      const totalCorrect = allAnswers.filter((a) => a.isCorrect).length;
+      const bestExam = sessions.length > 0 ? Math.max(...sessions.map((s: { totalPoints: number }) => s.totalPoints)) : scoreOut20;
+      const avgExam = sessions.length > 0 ? sessions.reduce((sum: number, s: { totalPoints: number }) => sum + s.totalPoints, 0) / sessions.length : scoreOut20;
+      const practiceRate = allAnswers.length > 0 ? Math.round((totalCorrect / allAnswers.length) * 100) : 0;
+      if (existing) {
+        existing.bestExamScore = Math.max(existing.bestExamScore, scoreOut20);
+        existing.examCount = sessions.length;
+        existing.avgExamScore = Math.round(avgExam * 100) / 100;
+        existing.totalPracticeCorrect = totalCorrect;
+        existing.totalPracticeDone = allAnswers.length;
+        existing.practiceRate = practiceRate;
+        existing.lastActivity = new Date().toISOString();
+      } else {
+        lb.push({
+          studentName,
+          bestExamScore: scoreOut20,
+          examCount: sessions.length,
+          avgExamScore: Math.round(avgExam * 100) / 100,
+          totalPracticeCorrect: totalCorrect,
+          totalPracticeDone: allAnswers.length,
+          practiceRate,
+          lastActivity: new Date().toISOString(),
+        });
+      }
+      localStorage.setItem('prepafds_leaderboard', JSON.stringify(lb));
+    }
+  } catch { /* silently ignore */ }
 
   // Build results
   const results = answers.map((a) => {

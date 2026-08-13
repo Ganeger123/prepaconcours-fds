@@ -18,6 +18,7 @@ export type ViewName =
   | 'practice'
   | 'exam'
   | 'results'
+  | 'leaderboard'
   | 'ai-assistant';
 
 export interface Exercise {
