@@ -412,6 +412,21 @@ function handleStats(): Response {
   return jsonResponse({ subjectStats, totalCompleted });
 }
 
+function handleLeaderboard(): Response {
+  try {
+    const raw = typeof localStorage !== 'undefined' ? localStorage.getItem('prepafds_leaderboard') : null;
+    const lb = raw ? JSON.parse(raw) : [];
+    // Sort by best exam score desc, then practice rate desc
+    const sorted = lb.sort((a: { bestExamScore: number; practiceRate: number }, b: { bestExamScore: number; practiceRate: number }) => {
+      if (b.bestExamScore !== a.bestExamScore) return b.bestExamScore - a.bestExamScore;
+      return b.practiceRate - a.practiceRate;
+    });
+    return jsonResponse({ leaderboard: sorted });
+  } catch {
+    return jsonResponse({ leaderboard: [] });
+  }
+}
+
 // --- Fetch override (client-side only) ---
 
 if (typeof window !== 'undefined') {
@@ -472,6 +487,11 @@ if (typeof window !== 'undefined') {
   // GET /api/stats
   if (pathname === '/api/stats' && (!init?.method || init.method === 'GET')) {
     return handleStats();
+  }
+
+  // GET /api/leaderboard
+  if (pathname === '/api/leaderboard' && (!init?.method || init.method === 'GET')) {
+    return handleLeaderboard();
   }
 
   // Fallback: pass through to original fetch
