@@ -1,9 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-
-// Import mock-api to activate client-side fetch override for exercises, grading, etc.
-import '@/lib/mock-api';
 import { useAppStore } from '@/lib/store';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
