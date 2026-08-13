@@ -1,9 +1,12 @@
 'use client';
 
+import { useState } from 'react';
+
 // Import mock-api to activate client-side fetch override for exercises, grading, etc.
 import '@/lib/mock-api';
 import { useAppStore } from '@/lib/store';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -19,6 +22,7 @@ import {
   GraduationCap,
   X,
   Info,
+  LogOut,
 } from 'lucide-react';
 import DashboardView from '@/components/views/DashboardView';
 import CursusView from '@/components/views/CursusView';
@@ -42,6 +46,62 @@ const NAV_ITEMS: ViewConfig[] = [
   { id: 'results', label: 'Mes résultats', icon: <History className="h-5 w-5" /> },
   { id: 'ai-assistant', label: 'Assistant IA', icon: <Bot className="h-5 w-5" /> },
 ];
+
+function AuthPage() {
+  const { setStudentName, setIsAuthenticated } = useAppStore();
+  const [name, setName] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = name.trim();
+    if (trimmed.length >= 2) {
+      setStudentName(trimmed);
+      setIsAuthenticated(true);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-teal-50 p-4">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-emerald-600 text-white mb-4 shadow-lg shadow-emerald-200">
+            <GraduationCap className="h-9 w-9" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900">PrépaConcours</h1>
+          <p className="text-sm text-muted-foreground mt-1">Faculté des Sciences d'Haïti</p>
+        </div>
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 space-y-4">
+          <div className="space-y-2">
+            <label htmlFor="name" className="text-sm font-medium text-gray-700">
+              Votre nom
+            </label>
+            <Input
+              id="name"
+              placeholder="Entrez votre nom..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              autoFocus
+              className="h-11"
+            />
+          </div>
+          <Button
+            type="submit"
+            disabled={name.trim().length < 2}
+            className="w-full h-11 bg-emerald-600 hover:bg-emerald-700 text-white font-medium"
+          >
+            Commencer
+          </Button>
+          <p className="text-xs text-center text-muted-foreground">
+            Entrez simplement votre nom pour accéder à la plateforme.
+          </p>
+        </form>
+        <p className="text-center text-xs text-muted-foreground mt-6">
+          120 exercices · 5 matières · Examens simulés
+        </p>
+      </div>
+    </div>
+  );
+}
 
 function SidebarContent({ onNavigate }: { onNavigate: (view: string) => void }) {
   const { currentView, navigateTo } = useAppStore();
@@ -88,20 +148,30 @@ function SidebarContent({ onNavigate }: { onNavigate: (view: string) => void }) 
       <Separator />
 
       {/* Footer */}
-      <div className="p-4">
+      <div className="p-4 space-y-3">
         <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3">
           <p className="text-xs font-medium text-emerald-800">Concours FDS Haïti</p>
           <p className="text-xs text-emerald-600 mt-1">
             Préparez-vous efficacement avec des exercices, des examens simulés et un assistant IA.
           </p>
         </div>
+        <Button
+          variant="ghost"
+          className="w-full justify-start gap-3 h-10 px-3 text-muted-foreground hover:text-red-600"
+          onClick={() => useAppStore.getState().logout()}
+        >
+          <LogOut className="h-4 w-4" />
+          <span className="text-sm">Déconnexion</span>
+        </Button>
       </div>
     </div>
   );
 }
 
 export default function Home() {
-  const { currentView, sidebarOpen, setSidebarOpen, navigateTo } = useAppStore();
+  const { currentView, sidebarOpen, setSidebarOpen, navigateTo, isAuthenticated, studentName } = useAppStore();
+
+  if (!isAuthenticated) return <AuthPage />;
 
   const renderView = () => {
     switch (currentView) {
@@ -153,9 +223,7 @@ export default function Home() {
               <span className="font-bold text-sm">PrépaConcours</span>
             </div>
           </div>
-          <Badge variant="outline" className="text-xs font-normal text-muted-foreground">
-            FDS Haïti
-          </Badge>
+          <span className="text-xs text-muted-foreground truncate max-w-[120px]">{studentName}</span>
         </div>
       </div>
 
@@ -168,7 +236,8 @@ export default function Home() {
               {NAV_ITEMS.find((i) => i.id === currentView)?.label || 'Tableau de bord'}
             </h2>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-muted-foreground">Bonjour, <strong className="text-foreground">{studentName}</strong></span>
             <Badge variant="outline" className="text-xs">
               Préparation Concours
             </Badge>

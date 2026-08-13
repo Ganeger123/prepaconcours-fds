@@ -50,6 +50,13 @@ interface AppState {
   // Sidebar
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
+
+  // Auth
+  studentName: string;
+  setStudentName: (name: string) => void;
+  isAuthenticated: boolean;
+  setIsAuthenticated: (auth: boolean) => void;
+  logout: () => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -112,4 +119,11 @@ export const useAppStore = create<AppState>((set) => ({
   // Sidebar
   sidebarOpen: false,
   setSidebarOpen: (open) => set({ sidebarOpen: open }),
+
+  // Auth
+  studentName: typeof window !== 'undefined' ? localStorage.getItem('prepafds_student_name') || '' : '',
+  setStudentName: (name) => { localStorage.setItem('prepafds_student_name', name); set({ studentName: name }); },
+  isAuthenticated: typeof window !== 'undefined' ? !!localStorage.getItem('prepafds_student_name') : false,
+  setIsAuthenticated: (auth) => set({ isAuthenticated: auth }),
+  logout: () => { localStorage.removeItem('prepafds_student_name'); set({ isAuthenticated: false, studentName: '' }); },
 }));
