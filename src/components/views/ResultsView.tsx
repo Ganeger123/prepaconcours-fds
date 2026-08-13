@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useAppStore } from '@/lib/store';
 import type { StudentAnswerRecord, Subject } from '@/lib/types';
 import { SUBJECT_INFO } from '@/lib/types';
+import { getResults } from '@/lib/client-api';
 import { History, CheckCircle, XCircle, Filter, Eye } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ALL_SUBJECTS } from '@/lib/types';
@@ -167,23 +168,20 @@ export default function ResultsView() {
   const [loading, setLoading] = useState(true);
   const [selectedSubject, setSelectedSubject] = useState<string>('all');
 
-  // ── Fetch results ────────────────────────────────────────────
+  // ── Load results directly from client-api ─────────────────────
   useEffect(() => {
-    async function fetchResults() {
+    function loadResults() {
       try {
-        const res = await fetch('/api/results');
-        if (res.ok) {
-          const data = await res.json();
-          setAnswers(data.answers);
-          setTotalCompleted(data.totalCompleted);
-        }
+        const data = getResults();
+        setAnswers(data.answers as StudentAnswerRecord[]);
+        setTotalCompleted(data.totalCompleted);
       } catch {
         // Silently fail — show empty state
       } finally {
         setLoading(false);
       }
     }
-    fetchResults();
+    loadResults();
   }, []);
 
   // ── Filtered answers ──────────────────────────────────────────

@@ -12,6 +12,7 @@ import { Progress } from '@/components/ui/progress';
 import { useAppStore } from '@/lib/store';
 import type { Exercise } from '@/lib/types';
 import { SUBJECT_INFO, DIFFICULTY_INFO } from '@/lib/types';
+import { getExercises, gradeExercise } from '@/lib/client-api';
 import {
   CheckCircle,
   XCircle,
@@ -86,7 +87,7 @@ export default function PracticeView() {
 
   // ── Fetch exercises on mount ──────────────────────────────
 
-  const fetchExercises = useCallback(async () => {
+  const fetchExercises = useCallback(() => {
     if (practiceExerciseIds.length === 0) {
       setLoading(false);
       return;
@@ -97,18 +98,10 @@ export default function PracticeView() {
 
     try {
       const idsParam = practiceExerciseIds.join(',');
-      const res = await fetch(`/api/exercises?ids=${idsParam}`);
-
-      if (!res.ok) {
-        setFetchError('Erreur lors du chargement des exercices.');
-        setExercises([]);
-        return;
-      }
-
-      const data: Exercise[] = await res.json();
-      setExercises(data);
+      const data = getExercises({ ids: idsParam });
+      setExercises(data as Exercise[]);
     } catch {
-      setFetchError('Erreur de connexion au serveur.');
+      setFetchError('Erreur lors du chargement des exercices.');
       setExercises([]);
     } finally {
       setLoading(false);
@@ -136,7 +129,7 @@ export default function PracticeView() {
 
   // ── Submit answer ─────────────────────────────────────────
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(() => {
     if (!currentExercise || submitting || gradeResult) return;
 
     const trimmed = currentAnswer.trim();
@@ -145,28 +138,7 @@ export default function PracticeView() {
     setSubmitting(true);
 
     try {
-      const res = await fetch('/api/grade', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          exerciseId: currentExercise.id,
-          studentAnswer: trimmed,
-        }),
-      });
-
-      if (!res.ok) {
-        setGradeResult({
-          isCorrect: false,
-          score: 0,
-          maxScore: currentExercise.points,
-          correctAnswer: currentExercise.correctAnswer,
-          solution: currentExercise.solution,
-          questionType: currentExercise.questionType,
-        });
-        return;
-      }
-
-      const data: GradeResult = await res.json();
+      const data = gradeExercise(currentExercise.id, trimmed);
       setGradeResult(data);
       setLastScore({
         isCorrect: data.isCorrect,

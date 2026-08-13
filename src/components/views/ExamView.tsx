@@ -12,6 +12,7 @@ import { Separator } from '@/components/ui/separator';
 import { useAppStore } from '@/lib/store';
 import type { Exercise } from '@/lib/types';
 import { SUBJECT_INFO } from '@/lib/types';
+import { getExercises, submitExam as submitExamApi, getExercises as getExercisesByIds } from '@/lib/client-api';
 import {
   Clock,
   Send,
@@ -86,15 +87,13 @@ export default function ExamView() {
 
   // ── Start Exam ─────────────────────────────────────────────
 
-  const startExam = useCallback(async () => {
+  const startExam = useCallback(() => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/exercises?exam=true');
-      if (!res.ok) throw new Error('Erreur lors du chargement des questions');
-      const exercises: Exercise[] = await res.json();
+      const examExercisesData = getExercises({ exam: 'true' });
 
-      setExamExercises(exercises);
+      setExamExercises(examExercisesData as Exercise[]);
       setExamActive(true);
       setExamTimeLeft(EXAM_DURATION);
       setExamSubmitted(false);
@@ -111,7 +110,7 @@ export default function ExamView() {
 
   // ── Submit Exam ────────────────────────────────────────────
 
-  const submitExam = useCallback(async () => {
+  const submitExamHandler = useCallback(() => {
     if (examSubmitted) return;
 
     // Stop timer
@@ -130,14 +129,7 @@ export default function ExamView() {
         studentAnswer: examAnswers.get(ex.id) ?? '',
       }));
 
-      const res = await fetch('/api/exam', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers, duration }),
-      });
-
-      if (!res.ok) throw new Error('Erreur lors de la soumission de l\'examen');
-      const data = await res.json();
+      const data = submitExamApi(answers, duration);
 
       setExamScore({
         totalPoints: data.totalPoints,
@@ -147,17 +139,14 @@ export default function ExamView() {
       setExamSubmitted(true);
       setExamActive(false);
 
-      // Fetch exercise details (including correctAnswer) for results display
+      // Get exercise details for results display
       const ids = examExercises.map((e) => e.id).join(',');
-      const exRes = await fetch(`/api/exercises?ids=${ids}`);
-      if (exRes.ok) {
-        const exData: Exercise[] = await exRes.json();
-        const detailMap = new Map<string, Exercise>();
-        for (const ex of exData) {
-          detailMap.set(ex.id, ex);
-        }
-        setExerciseDetails(detailMap);
+      const exData = getExercisesByIds({ ids });
+      const detailMap = new Map<string, Exercise>();
+      for (const ex of exData) {
+        detailMap.set(ex.id, ex as Exercise);
       }
+      setExerciseDetails(detailMap);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur inconnue');
     } finally {
@@ -167,8 +156,8 @@ export default function ExamView() {
 
   // ── Timer (uses ref to submitExam to avoid stale closure) ──
 
-  const submitExamRef = useRef(submitExam);
-  submitExamRef.current = submitExam;
+  const submitExamRef = useRef(submitExamHandler);
+  submitExamRef.current = submitExamHandler;
 
   useEffect(() => {
     if (!examActive || examSubmitted) {
@@ -209,9 +198,9 @@ export default function ExamView() {
       message = `Vous avez ${unanswered} question(s) sans réponse. Êtes-vous sûr(e) de vouloir soumettre l\'examen ?`;
     }
     if (window.confirm(message)) {
-      submitExam();
+      submitExamHandler();
     }
-  }, [examExercises, examAnswers, submitExam]);
+  }, [examExercises, examAnswers, submitExamHandler]);
 
   // ── Reset Exam ─────────────────────────────────────────────
 

@@ -19,6 +19,7 @@ import type { Exercise, Subject, Difficulty } from '@/lib/types';
 import { SUBJECT_INFO, DIFFICULTY_INFO, ALL_SUBJECTS, ALL_DIFFICULTIES } from '@/lib/types';
 import { getVideosBySubject, getVideosByTopic } from '@/lib/video-resources';
 import type { VideoResource } from '@/lib/video-resources';
+import { getExercises } from '@/lib/client-api';
 
 // ── Helpers ───────────────────────────────────────────────────
 
@@ -210,18 +211,12 @@ export default function ExercisesView() {
     setTopic('');
   }, [subject]);
 
-  // Fetch exercises when filters change
-  const fetchExercises = useCallback(async () => {
+  // Load exercises when filters change (direct client-api call, no fetch)
+  const fetchExercises = useCallback(() => {
     setLoading(true);
     try {
-      const qs = buildQueryParams(subject, difficulty, topic, search);
-      const res = await fetch(`/api/exercises${qs}`);
-      if (res.ok) {
-        const data: Exercise[] = await res.json();
-        setExercises(data);
-      } else {
-        setExercises([]);
-      }
+      const data = getExercises({ subject: subject || undefined, difficulty: difficulty || undefined, topic: topic || undefined, search: search || undefined });
+      setExercises(data as Exercise[]);
     } catch {
       setExercises([]);
     } finally {
@@ -236,22 +231,19 @@ export default function ExercisesView() {
   // Determine if any filter is active (for empty state messaging)
   const hasFilters = !!(subject || difficulty || topic || search);
 
-  // Start a single exercise: fetch all matching, find its index, navigate
+  // Start a single exercise: get all matching, find its index, navigate
   const handleStartExercise = useCallback(
-    async (exercise: Exercise) => {
+    (exercise: Exercise) => {
       setStarting(true);
       try {
-        const qs = buildQueryParams(subject, difficulty, topic, search);
-        const res = await fetch(`/api/exercises${qs}`);
-        if (!res.ok) return;
-        const allExercises: Exercise[] = await res.json();
+        const allExercises = getExercises({ subject: subject || undefined, difficulty: difficulty || undefined, topic: topic || undefined, search: search || undefined });
         const ids = allExercises.map((e) => e.id);
         const index = ids.indexOf(exercise.id);
         setPracticeExerciseIds(ids);
         setCurrentPracticeIndex(index >= 0 ? index : 0);
         navigateTo('practice');
       } catch {
-        // Silently fail – user stays on the page
+        // Silently fail
       } finally {
         setStarting(false);
       }
@@ -260,7 +252,7 @@ export default function ExercisesView() {
   );
 
   // Start all filtered exercises from index 0
-  const handleStartAll = useCallback(async () => {
+  const handleStartAll = useCallback(() => {
     setStarting(true);
     try {
       const ids = exercises.map((e) => e.id);

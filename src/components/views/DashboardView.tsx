@@ -8,6 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useAppStore } from '@/lib/store';
 import type { SubjectStats } from '@/lib/types';
 import { SUBJECT_INFO, ALL_SUBJECTS } from '@/lib/types';
+import { getStats } from '@/lib/client-api';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend
@@ -174,52 +175,27 @@ export default function DashboardView() {
   } = useAppStore();
 
   const [loading, setLoading] = useState(true);
-  const [setupStatus, setSetupStatus] = useState('');
-
-  // Auto-setup: seed database on first visit (needed for Vercel deployment)
-  useEffect(() => {
-    async function ensureSetup() {
-      try {
-        const check = await fetch('/api/setup');
-        const data = await check.json();
-        if (!data.isSeeded) {
-          setSetupStatus('Initialisation de la base de donnees...');
-          const setupRes = await fetch('/api/setup', { method: 'POST' });
-          if (setupRes.ok) {
-            const setupData = await setupRes.json();
-            setSetupStatus(setupData.message || 'Base de donnees prete !');
-          }
-        }
-      } catch {
-        // silently continue
-      }
-    }
-    ensureSetup();
-  }, []);
 
   useEffect(() => {
-    async function fetchStats() {
+    function loadStats() {
       try {
-        const res = await fetch('/api/stats');
-        if (res.ok) {
-          const data = await res.json();
-          setSubjectStats(data.subjectStats);
-          setTotalExercisesCompleted(data.totalCompleted);
-        }
+        const data = getStats();
+        setSubjectStats(data.subjectStats as SubjectStats[]);
+        setTotalExercisesCompleted(data.totalCompleted);
       } catch {
-        // If fetch fails, we just show empty or cached data
+        // If load fails, show empty state
       } finally {
         setLoading(false);
       }
     }
-    fetchStats();
+    loadStats();
   }, [setSubjectStats, setTotalExercisesCompleted]);
 
   if (loading) {
     return <DashboardSkeleton />;
   }
 
-  if (totalExercisesCompleted === 0 && !setupStatus) {
+  if (totalExercisesCompleted === 0) {
     return <EmptyState />;
   }
 

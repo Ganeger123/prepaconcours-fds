@@ -1,6 +1,5 @@
 'use client';
 
-import '@/lib/mock-api'; // Must be first: overrides fetch for client-side API handling
 import { useState } from 'react';
 import { useAppStore } from '@/lib/store';
 import { Button } from '@/components/ui/button';
