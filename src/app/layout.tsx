@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Plateforme de préparation au concours d'entrée de la Faculté des Sciences d'Haïti. Exercices en Mathématiques, Physique, Chimie, Optique et Culture Générale avec correction automatique et assistant IA.",
   keywords: ["Haïti", "concours", "Faculté des Sciences", "mathématiques", "physique", "chimie", "optique", "examen"],
   icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+    icon: '/favicon.svg',
   },
 };
 

@@ -1,6 +1,7 @@
 'use client';
 
-// API routes are now fully server-side (no more mock-api.ts override)
+// Import mock-api to activate client-side fetch override for exercises, grading, etc.
+import '@/lib/mock-api';
 import { useAppStore } from '@/lib/store';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
